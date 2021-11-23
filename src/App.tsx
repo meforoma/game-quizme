@@ -1,26 +1,70 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
 
-function App() {
+import { QuizScreen } from './components/QuizScreen';
+import './styles/general.scss';
+
+export const App = () => {
+  const [userQuestionsCount, setUserQuestionsCount] = useState(3);
+
+  const [screenDisplay, setScreenDisplay] = useState({
+    showStartScreen: true,
+    showQuizScreen: false,
+  });
+
+  const restart = () => {
+    setScreenDisplay({
+      showStartScreen: true,
+      showQuizScreen: false,
+    });
+  };
+
+  const questionsSelect = [3, 5, 6, 7, 8, 9, 10];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <main>
+      {screenDisplay.showStartScreen && (
+        <>
+          <h1 className="title">QuizMe</h1>
 
-export default App;
+          <p className="instructions">
+            ...instructions
+          </p>
+
+          <section className="start-section">
+            <h4>How much questions do you want to be quizzed on?</h4>
+
+            <select
+              name="userQuestionsCount"
+              className="user-select-questions-count"
+              value={userQuestionsCount}
+              onChange={(event) => setUserQuestionsCount(+event.target.value)}
+            >
+              {questionsSelect.map(count => (
+                <option key={count} value={count}>{count}</option>
+              ))}
+            </select>
+          </section>
+
+          <button
+            type="button"
+            className="start-button"
+            onClick={() => setScreenDisplay({
+              showStartScreen: false,
+              showQuizScreen: true,
+            })}
+          >
+            Quiz me!
+          </button>
+        </>
+      )}
+
+      {screenDisplay.showQuizScreen && (
+        <QuizScreen
+          userQuestionsCount={userQuestionsCount}
+          restart={restart}
+        />
+      )}
+
+    </main>
+  );
+};
