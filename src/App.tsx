@@ -26,10 +26,6 @@ export const App = () => {
         <>
           <h1 className="title">QuizMe</h1>
 
-          {/* <p className="instructions">
-            ...instructions
-          </p> */}
-
           <section className="start-section">
             <h4>How much questions do you want to be quizzed on?</h4>
 
