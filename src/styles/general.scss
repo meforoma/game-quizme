@@ -26,15 +26,17 @@ main {
   margin: 0;
 }
 
-.instructions {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  margin-top: 0;
-  text-align: center;
-}
-
 .user-select-questions-count {
-  display: inline;
+  text-align:center;
+  
+  &__input {
+    font-size: 1.5rem;
+    background-color: rgb(226, 221, 221);
+    border: none;
+    text-align: center;
+    border-radius: 6px;
+    width: 70px;
+  }
 }
 
 .start-button {

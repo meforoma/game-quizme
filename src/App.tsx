@@ -18,7 +18,12 @@ export const App = () => {
     });
   };
 
-  const questionsSelect = [3, 5, 6, 7, 8, 9, 10];
+  const toggleScreen = () => {
+    setScreenDisplay({
+      showStartScreen: false,
+      showQuizScreen: true,
+    });
+  };
 
   return (
     <main>
@@ -27,27 +32,32 @@ export const App = () => {
           <h1 className="title">QuizMe</h1>
 
           <section className="start-section">
-            <h4>How much questions do you want to be quizzed on?</h4>
+            <div>
+              <h3>How much questions do you want to be quizzed on?</h3>
+            </div>
 
-            <select
-              name="userQuestionsCount"
-              className="user-select-questions-count"
-              value={userQuestionsCount}
-              onChange={(event) => setUserQuestionsCount(+event.target.value)}
-            >
-              {questionsSelect.map(count => (
-                <option key={count} value={count}>{count}</option>
-              ))}
-            </select>
+            <div className="user-select-questions-count">
+              <input
+                type="number"
+                min={3}
+                max={20}
+                name="userQuestionsCount"
+                className="user-select-questions-count__input"
+                value={userQuestionsCount}
+                onChange={(event) => setUserQuestionsCount(+event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.code === 'Enter') {
+                    toggleScreen();
+                  }
+                }}
+              />
+            </div>
           </section>
 
           <button
             type="button"
             className="start-button"
-            onClick={() => setScreenDisplay({
-              showStartScreen: false,
-              showQuizScreen: true,
-            })}
+            onClick={() => toggleScreen()}
           >
             Quiz me!
           </button>

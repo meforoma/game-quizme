@@ -21,8 +21,6 @@ type Props = {
 };
 
 export const QuestionDisplay = (props: Props) => {
-  console.log('mount QuestionDisplay');
-
   const {
     category, difficulty,
     question, correctAnswer,
@@ -35,9 +33,8 @@ export const QuestionDisplay = (props: Props) => {
 
   useEffect(() => {
     const answers = incorrectAnswers.concat(correctAnswer);
-    const randAnswers = answers.sort(() => Math.floor(Math.random() - 0.5));
 
-    setAnswersLayout(randAnswers);
+    setAnswersLayout(answers.sort());
   }, []);
 
   return (

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-console */
 
@@ -19,10 +18,12 @@ type UserAnswers = {
 };
 
 export const QuizScreen = (props: Props) => {
-  console.log('mount QuizScreen');
-
   const { userQuestionsCount, restart } = props;
 
+  const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
+  const [userClickedCheckme, setUserClickedCheckme] = useState(false);
+
+  // questions initialization to pass onto QuestionDisplay component
   const [questions, setQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
@@ -30,17 +31,11 @@ export const QuizScreen = (props: Props) => {
       .then(setQuestions);
   }, []);
 
+  // object of correct answers to evaluate against
   const correctAnswersPairs = questions.map(mapQuestion => (
     [mapQuestion.question, mapQuestion.correct_answer]
   ));
   const correctAnswers = Object.fromEntries(correctAnswersPairs);
-
-  const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
-
-  console.log('correctAnswersObj', correctAnswers);
-  console.log('userAnswers', userAnswers, Object.keys(userAnswers).length);
-
-  const [userClickedCheckme, setUserClickedCheckme] = useState(false);
 
   const evaluateAnswers = () => {
     let result = 0;
@@ -53,8 +48,6 @@ export const QuizScreen = (props: Props) => {
 
     return result;
   };
-
-  console.log('evaluateAnswers', evaluateAnswers());
 
   const questionsToShow = questions.map((question: Question) => (
     <QuestionDisplay
