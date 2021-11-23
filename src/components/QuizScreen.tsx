@@ -14,6 +14,10 @@ type Props = {
   restart: () => void,
 };
 
+type UserAnswers = {
+  [question: string]: string;
+};
+
 export const QuizScreen = (props: Props) => {
   console.log('mount QuizScreen');
 
@@ -31,7 +35,7 @@ export const QuizScreen = (props: Props) => {
   ));
   const correctAnswers = Object.fromEntries(correctAnswersPairs);
 
-  const [userAnswers, setUserAnswers] = useState({});
+  const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
 
   console.log('correctAnswersObj', correctAnswers);
   console.log('userAnswers', userAnswers, Object.keys(userAnswers).length);
