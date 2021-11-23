@@ -1,6 +1,5 @@
 {
-  "homepage": "http://meforoma.github.io/quizme",
-  "name": "react-tenzi-from-scratch",
+  "homepage": "http://meforoma.github.io/game-quizme",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
