@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import { decode } from 'html-entities';
-import classNames from 'classnames';
 import {
   Dispatch, SetStateAction,
-  useEffect, useState,
+  useMemo,
 } from 'react';
+import { Answers } from './Answers';
 
 type Props = {
   category: string;
@@ -29,48 +27,36 @@ export const QuestionDisplay = (props: Props) => {
     setUserAnswers,
   } = props;
 
-  const [answersLayout, setAnswersLayout] = useState<string[]>([]);
-
-  useEffect(() => {
-    const answers = incorrectAnswers.concat(correctAnswer);
-
-    setAnswersLayout(answers.sort());
-  }, []);
+  const answers = useMemo(() => (
+    <Answers
+      incorrectAnswers={incorrectAnswers}
+      correctAnswer={correctAnswer}
+      userAnswers={userAnswers}
+      question={question}
+      userClickedCheckme={userClickedCheckme}
+      setUserAnswers={setUserAnswers}
+    />
+  ), []);
 
   return (
     <div className="question">
-      <span className={`question__difficulty question__difficulty--${difficulty}`}>
-        {`Difficulty: ${difficulty}`}
-      </span>
-      <span className="question__category">
-        {` Category: ${decode(category)}`}
-      </span>
+      <div className="question__header">
+        <span className={`question__difficulty question__difficulty--${difficulty}`}>
+          {`Difficulty: ${difficulty}`}
+        </span>
+        <span className="question__category">
+          {` Category: ${decode(category)}`}
+        </span>
+      </div>
+
       <div className="question__body">
-        <h3>{decode(question)}</h3>
+        <span>{decode(question)}</span>
       </div>
 
       <div className="question__answers">
-        {answersLayout.map((answer: string) => (
-          <div
-            key={answer}
-            className={classNames({
-              answer,
-              'answer--selected': userAnswers[question] === answer,
-              'answer--correct': userClickedCheckme
-                && correctAnswer === answer,
-              'answer--incorrect': userClickedCheckme
-                && correctAnswer !== answer
-                && userAnswers[question] === answer,
-            })}
-            onClick={() => setUserAnswers((prev: {}) => ({
-              ...prev,
-              [question]: answer,
-            }))}
-          >
-            {decode(answer)}
-          </div>
-        ))}
+        {answers}
       </div>
+
     </div>
   );
 };

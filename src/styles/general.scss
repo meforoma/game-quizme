@@ -2,6 +2,19 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 500px) {
+  html {
+    font-size: 12px;
+  }
+  body main {
+    min-height: 300px;
+  }
+}
+
 body {
   margin: 0;
   background-color: #0B2434;
@@ -21,8 +34,12 @@ main {
   align-items: center;
 }
 
+.start-section {
+  width: 75%;
+}
+
 .title {
-  font-size: 40px;
+  font-size: 1.75rem;
   margin: 0;
 }
 
@@ -30,7 +47,7 @@ main {
   text-align:center;
   
   &__input {
-    font-size: 1.5rem;
+    font-size: 1.2em;
     background-color: rgb(226, 221, 221);
     border: none;
     text-align: center;
@@ -58,7 +75,6 @@ main {
 .questions-container {
   display: flex;
   flex-direction: column;
-  place-self: left left;
 }
 
 .question {
@@ -72,6 +88,10 @@ main {
   &:nth-of-type(2n) {
     background-color: rgba(214, 219, 245, 0.4);
   }
+}
+
+.question__header {
+  font-size: 1.1rem;
 }
 
 .question__difficulty {
@@ -93,13 +113,15 @@ main {
 }
 
 .question__body {
-  padding: 8px;
-  margin-left: 16px;
+  font-size: 1.2em;
+  padding: 4px;
+  margin: 4px 0 6px 6px;
 }
 
 .question__answers {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: baseline;
 }
@@ -107,11 +129,12 @@ main {
 .answer {
   border: 0.5px solid rgba(0, 0, 0, 0.5);
   border-radius: 6px;
-  margin-right: 6px;
+  margin: 0 4px 4px 0;
   padding: 4px;
-  max-width: 120px;
+  max-width: 100px;
   min-width: 80px;
   font-weight: 100;
+  font-size: 1em;
 
   &--selected {
     background-color: rgba(214, 219, 245, 1);
@@ -131,7 +154,8 @@ main {
 }
 
 .result-message {
-  margin: 10px;
+  font-size: 1.2em;
+  // margin: 10px;
   padding: 10px;
 }
 

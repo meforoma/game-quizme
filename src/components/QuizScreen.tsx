@@ -2,7 +2,10 @@
 /* eslint-disable no-console */
 
 import { nanoid } from 'nanoid';
-import { useEffect, useState } from 'react';
+import {
+  useEffect, useState,
+  Dispatch, SetStateAction,
+} from 'react';
 import Confetti from 'react-confetti';
 import { getQuestions } from '../api/api';
 import { Question } from '../types/types';
@@ -11,6 +14,8 @@ import { QuestionDisplay } from './QuestionDisplay';
 type Props = {
   userQuestionsCount: number,
   restart: () => void,
+  isLoading: boolean,
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
 };
 
 type UserAnswers = {
@@ -18,7 +23,10 @@ type UserAnswers = {
 };
 
 export const QuizScreen = (props: Props) => {
-  const { userQuestionsCount, restart } = props;
+  const {
+    userQuestionsCount, restart,
+    isLoading, setIsLoading,
+  } = props;
 
   const [userAnswers, setUserAnswers] = useState<UserAnswers>({});
   const [userClickedCheckme, setUserClickedCheckme] = useState(false);
@@ -31,13 +39,17 @@ export const QuizScreen = (props: Props) => {
       .then(setQuestions);
   }, []);
 
+  if (questions.length > 0) {
+    setIsLoading(false);
+  }
+
   // object of correct answers to evaluate against
   const correctAnswersPairs = questions.map(mapQuestion => (
     [mapQuestion.question, mapQuestion.correct_answer]
   ));
   const correctAnswers = Object.fromEntries(correctAnswersPairs);
 
-  const evaluateAnswers = () => {
+  const countCorrectAnswers = () => {
     let result = 0;
 
     for (const answer in userAnswers) {
@@ -49,7 +61,18 @@ export const QuizScreen = (props: Props) => {
     return result;
   };
 
-  const questionsToShow = questions.map((question: Question) => (
+  const handleCheckMe = () => {
+    if (userClickedCheckme) {
+      setUserClickedCheckme(false);
+      setUserAnswers({});
+
+      restart();
+    } else {
+      setUserClickedCheckme(true);
+    }
+  };
+
+  const questionsDisplay = questions.map((question: Question) => (
     <QuestionDisplay
       key={nanoid()}
       category={question.category}
@@ -63,45 +86,40 @@ export const QuizScreen = (props: Props) => {
     />
   ));
 
-  const handleCheckMe = () => {
-    if (userClickedCheckme) {
-      setUserClickedCheckme(false);
-      setUserAnswers({});
-
-      restart();
-    } else {
-      setUserClickedCheckme(true);
-    }
-  };
-
   return (
     <>
-      {evaluateAnswers() === userQuestionsCount
+      {countCorrectAnswers() === userQuestionsCount
         && userClickedCheckme
         && <Confetti />}
 
-      <div className="questions-container">
-        {questionsToShow}
-      </div>
+      {!isLoading && <span className="title">Here is your quiz:</span>}
 
-      {userClickedCheckme && (
-        <div className="result-message">
-          {userQuestionsCount === evaluateAnswers()
-            ? '🎉 Spectacular!!! You scored all the questions 🎉'
-            : `You scored ${evaluateAnswers()} of ${userQuestionsCount} questions`}
+      <div className="main-container">
+        <div className="questions-container">
+          {questionsDisplay}
         </div>
-      )}
 
-      {userQuestionsCount
-        === Object.keys(userAnswers).length && (
-          <button
-            className="button-validate"
-            type="button"
-            onClick={() => handleCheckMe()}
-          >
-            {userClickedCheckme ? 're-Quiz, please' : 'Check me'}
-          </button>
-      )}
+        {userClickedCheckme && (
+          <div className="result-message">
+            {userQuestionsCount === countCorrectAnswers()
+              ? '🎉 Spectacular!!! You scored all the questions 🎉'
+              : `You scored ${countCorrectAnswers()} of ${userQuestionsCount} questions`}
+          </div>
+        )}
+
+        {userQuestionsCount
+          === Object.keys(userAnswers).length && (
+            <button
+              className="button-validate"
+              type="button"
+              onClick={() => handleCheckMe()}
+            >
+              {userClickedCheckme
+                ? 're-Quiz, please'
+                : 'Check me'}
+            </button>
+        )}
+      </div>
     </>
   );
 };

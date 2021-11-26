@@ -11,6 +11,8 @@ export const App = () => {
     showQuizScreen: false,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const restart = () => {
     setScreenDisplay({
       showStartScreen: true,
@@ -23,6 +25,7 @@ export const App = () => {
       showStartScreen: false,
       showQuizScreen: true,
     });
+    setIsLoading(true);
   };
 
   return (
@@ -45,7 +48,7 @@ export const App = () => {
                 className="user-select-questions-count__input"
                 value={userQuestionsCount}
                 onChange={(event) => setUserQuestionsCount(+event.target.value)}
-                onKeyDown={(event) => {
+                onKeyUp={(event) => {
                   if (event.code === 'Enter') {
                     toggleScreen();
                   }
@@ -57,16 +60,26 @@ export const App = () => {
           <button
             type="button"
             className="start-button"
-            onClick={() => toggleScreen()}
+            onClick={() => {
+              toggleScreen();
+            }}
           >
             Quiz me!
           </button>
         </>
       )}
 
+      {isLoading && (
+        <h1>
+          ...Loading
+        </h1>
+      )}
+
       {screenDisplay.showQuizScreen && (
         <QuizScreen
           userQuestionsCount={userQuestionsCount}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
           restart={restart}
         />
       )}
