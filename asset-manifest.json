@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/game-quizme/static/css/main.8268822c.chunk.css",
-    "main.js": "/game-quizme/static/js/main.fe4f20d0.chunk.js",
-    "main.js.map": "/game-quizme/static/js/main.fe4f20d0.chunk.js.map",
+    "main.css": "/game-quizme/static/css/main.c930cf9a.chunk.css",
+    "main.js": "/game-quizme/static/js/main.6b24c99a.chunk.js",
+    "main.js.map": "/game-quizme/static/js/main.6b24c99a.chunk.js.map",
     "runtime-main.js": "/game-quizme/static/js/runtime-main.c607dbb8.js",
     "runtime-main.js.map": "/game-quizme/static/js/runtime-main.c607dbb8.js.map",
-    "static/js/2.a40ede94.chunk.js": "/game-quizme/static/js/2.a40ede94.chunk.js",
-    "static/js/2.a40ede94.chunk.js.map": "/game-quizme/static/js/2.a40ede94.chunk.js.map",
+    "static/js/2.01dee101.chunk.js": "/game-quizme/static/js/2.01dee101.chunk.js",
+    "static/js/2.01dee101.chunk.js.map": "/game-quizme/static/js/2.01dee101.chunk.js.map",
     "index.html": "/game-quizme/index.html",
-    "static/css/main.8268822c.chunk.css.map": "/game-quizme/static/css/main.8268822c.chunk.css.map",
-    "static/js/2.a40ede94.chunk.js.LICENSE.txt": "/game-quizme/static/js/2.a40ede94.chunk.js.LICENSE.txt"
+    "static/css/main.c930cf9a.chunk.css.map": "/game-quizme/static/css/main.c930cf9a.chunk.css.map",
+    "static/js/2.01dee101.chunk.js.LICENSE.txt": "/game-quizme/static/js/2.01dee101.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c607dbb8.js",
-    "static/js/2.a40ede94.chunk.js",
-    "static/css/main.8268822c.chunk.css",
-    "static/js/main.fe4f20d0.chunk.js"
+    "static/js/2.01dee101.chunk.js",
+    "static/css/main.c930cf9a.chunk.css",
+    "static/js/main.6b24c99a.chunk.js"
   ]
 }
